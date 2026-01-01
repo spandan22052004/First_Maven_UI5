@@ -1,0 +1,64 @@
+<mvc:View
+    controllerName="sample.project1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <!-- 1 -->
+        <Input
+            id="id1"
+            type="Text"
+            value="hello world"
+        />
+        <!-- 2 -->
+        <VBox>
+            <Text text="Item 1" />
+            <Text text="Item 2" />
+        </VBox>
+        <!-- 3 -->
+        <HBox>
+            <Button text="Yes" />
+            <Button text="No" />
+        </HBox>
+        <!-- 4 -->
+        <List>
+            <StandardListItem title="Item 1" />
+            <StandardListItem title="Item 2" />
+        </List>
+        <!-- 5 -->
+        <core:Icon src="sap-icon://employee" />
+        <!-- 6 -->
+        <core:HTML content="&lt;b&gt;SPANDAN&lt;/b&gt;"  />
+        <!-- 7 -->
+        <form:SimpleForm title="User Form">
+            <Label text="Name" />
+            <Input />
+        </form:SimpleForm>
+        <!-- 8 -->
+        <l:Grid defaultSpan="L6 M6 S12">
+            <Input placeholder="First Name">
+                <layoutData>
+                    <l:GridData span="L6 M6 S12" />
+                </layoutData>
+            </Input>
+
+            <Input placeholder="Last Name">
+                <layoutData>
+                    <l:GridData span="L6 M6 S12" />
+                </layoutData>
+            </Input>
+        </l:Grid>
+
+        <!-- 9 -->
+        <Button
+            text="Cancel"
+            type="Default"
+        />
+    </Page>
+</mvc:View>
