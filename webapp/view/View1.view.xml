@@ -1,63 +1,111 @@
 <mvc:View
-  controllerName="sample.project1.controller.View1"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:f="sap.ui.layout.form"
-  xmlns="sap.m">
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="sample.project1.controller.View1">
 
-  <Page title="Maventic Trainee Form">
+    <Page
+        title="Application Dashboard"
+        titleAlignment="Center">
 
-    <!-- FORM -->
-    <f:SimpleForm editable="true">
+        <content>
 
-      <Label text="Name"/>
-      <Input value="{formModel>/name}" />
+            <VBox
+                class="sapUiLargeMargin sapUiContentPadding"
+                alignItems="Center"
+                width="100%">
 
-      <Label text="Age"/>
-      <Input value="{formModel>/age}" type="Number"/>
+                <!-- ================= Accnt info (formatter) ================= -->
+                <Panel
+                    width="480px"
+                    headerText="Account Information"
+                    class="sapUiMediumMarginBottom">
 
-      <Label text="City"/>
-      <Input value="{formModel>/city}" />
+                    <VBox class="sapUiMediumMargin">
 
-    </f:SimpleForm>
+                        <ObjectHeader
+                            title="Account Status"
+                            intro="Live Application Data"
+                            icon="sap-icon://business-card"/>
 
-    <!-- BUTTONS -->
-    <HBox justifyContent="Center" class="sapUiSmallMargin">
-      <Button text="Add to Table" press=".onAddToTable"/>
-      <Button text="Add to List" press=".onAddToList"
-              class="sapUiTinyMarginBegin"/>
-    </HBox>
+                        <HBox
+                            justifyContent="SpaceBetween"
+                            alignItems="Center"
+                            class="sapUiSmallMarginTop">
+                            <Label text="Status" design="Bold"/>
+                            <ObjectStatus
+                                text="{ path: 'appModel>/status', formatter: '.formatter.statusText' }"
+                                state="{ path: 'appModel>/status', formatter: '.formatter.statusState' }"/>
+                        </HBox>
 
-    <!-- TABLE HEADING -->
-    <Title text="Table Data" level="H2" class="sapUiSmallMarginTop"/>
+                        <HBox
+                            justifyContent="SpaceBetween"
+                            alignItems="Center"
+                            class="sapUiSmallMarginTop">
+                            <Label text="Amount" design="Bold"/>
+                            <Text
+                                text="{ path: 'appModel>/amount', formatter: '.formatter.amountFormat' }"/>
+                        </HBox>
 
-    <!-- TABLE -->
-    <Table items="{tableModel>/items}">
-      <columns>
-        <Column><Text text="Name"/></Column>
-        <Column><Text text="Age"/></Column>
-        <Column><Text text="City"/></Column>
-      </columns>
+                        <Button
+                            text="Show Status"
+                            icon="sap-icon://message-popup"
+                            type="Emphasized"
+                            press="onShowStatus"
+                            class="sapUiMediumMarginTop"
+                            width="100%"/>
+                    </VBox>
+                </Panel>
 
-      <items>
-        <ColumnListItem>
-          <cells>
-            <Text text="{tableModel>name}"/>
-            <Text text="{tableModel>age}"/>
-            <Text text="{tableModel>city}"/>
-          </cells>
-        </ColumnListItem>
-      </items>
-    </Table>
+                <!-- ================= Input using valuehelp ================= -->
+                <Panel
+                    width="480px"
+                    headerText="Select &amp; Add Values">
 
-    <!-- LIST HEADING -->
-    <Title text="List Data" level="H2" class="sapUiSmallMarginTop"/>
+                    <VBox class="sapUiMediumMargin">
 
-    <!-- LIST -->
-    <List items="{listModel>/items}">
-      <StandardListItem
-        title="{listModel>name}"
-        description="Age: {listModel>age} | City: {listModel>city}" />
-    </List>
+                        <Label
+                            text="Select Value"
+                            design="Bold"
+                            class="sapUiSmallMarginBottom"/>
 
-  </Page>
+                        <Input
+                            id="myInput"
+                            placeholder="Click value help"
+                            showValueHelp="true"
+                            valueHelpRequest="onValueHelp"/>
+
+                        <Button
+                            text="Add to Table"
+                            icon="sap-icon://add"
+                            type="Emphasized"
+                            press="onAdd"
+                            class="sapUiSmallMarginTop"/>
+
+                        <Table
+                            items="{appModel>/selected}"
+                            class="sapUiMediumMarginTop"
+                            inset="false">
+
+                            <columns>
+                                <Column>
+                                    <Text text="Selected Values"/>
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{appModel>name}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+
+                        </Table>
+                    </VBox>
+                </Panel>
+
+            </VBox>
+
+        </content>
+    </Page>
 </mvc:View>

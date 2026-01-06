@@ -52,21 +52,9 @@
           "bundleName": "sample.project1.i18n.i18n"
         }
       },
-      "manifestModel": {
-        "type": "sap/ui/model/json/JSONModel",
+       "appModel": {
+        "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data.json"
-      },
-      "formModel": {
-        "type": "sap/ui/model/json/JSONModel",
-        "uri": "model/formData.json"
-      },
-      "tableModel": {
-        "type": "sap/ui/model/json/JSONModel",
-        "uri": "model/tableData.json"
-      },
-      "listModel": {
-        "type": "sap/ui/model/json/JSONModel",
-        "uri": "model/listData.json"
       }
     },
     "resources": {

@@ -1,59 +1,66 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageBox",
-    "sap/ui/model/json/JSONModel"
-], (Controller, MessageBox, JSONModel) => {
+    "sample/project1/model/formatter",
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment"
+], function (Controller, formatter, MessageToast,Fragment) {
     "use strict";
 
     return Controller.extend("sample.project1.controller.View1", {
-        onInit() {
-            // MessageBox.success("OnInit");
-            // let oData = {
-            //     "name": "Spandan"
-            // }
-            // let oModel = new JSONModel(oData);
-            // this.getView().setModel(oModel, "model1");
-        },
-        // onBeforeRendering(){
-        //     MessageBox.success("On before rendering");
-        // },
-        // onAfterRendering(){
-        //     MessageBox.error("On after rendering");
-        // }
-        onPress: function () {
-            console.log("Button clicked");
-        },
-        onAddToTable: function () {
-            var oFormData = this.getView().getModel("formModel").getData();
-            var oTableModel = this.getView().getModel("tableModel");
-            var aItems = oTableModel.getProperty("/items");
 
-            aItems.push({ ...oFormData });
-            oTableModel.setProperty("/items", aItems);
+        formatter: formatter,
 
-            this._clearForm();
+        onInit: function () {
+            var oModel = this.getOwnerComponent().getModel("appModel");
+            var sStatus = oModel.getProperty("/status");
+
+            var sText = formatter.statusText(sStatus);
+            console.log("Formatted Status:", sText);
         },
 
-        onAddToList : function(){
-           var oFormData = this.getView().getModel("formModel").getData();
-           var oListModel = this.getView().getModel("listModel");
-           var aItems = oListModel.getProperty("/items");
+        onShowStatus: function () {
+            var oModel = this.getOwnerComponent().getModel("appModel");
+            var sStatus = oModel.getProperty("/status");
 
-           aItems.push({...oFormData});
-           oListModel.setProperty("/items",aItems);
-
-           this._clearForm();
+            MessageToast.show(formatter.statusText(sStatus));
         },
 
-        _clearForm: function () {
-            this.getView().getModel("formModel").setData({
-                name: "",
-                age: "",
-                city: ""
-            });
+
+        // ------------------------------valuehelp------------------------------------------------
+        onValueHelp: function () {
+            if (!this._oDialog) {
+                Fragment.load({
+                    name: "sample.project1.view.ValueHelp",
+                    controller: this
+                }).then(function (oDialog) {
+                    this._oDialog = oDialog;
+                    this.getView().addDependent(oDialog);
+                    oDialog.open();
+                }.bind(this));
+            } else {
+                this._oDialog.open();
+            }
+        },
+         onValueSelected: function (oEvent) {
+            var oItem = oEvent.getParameter("selectedItem");
+            if (!oItem) {
+                return;
+            }
+            this.byId("myInput").setValue(oItem.getTitle());
+        },
+         onAdd: function () {
+            var sValue = this.byId("myInput").getValue();
+            if (!sValue) {
+                return;
+            }
+
+            var oModel = this.getOwnerComponent().getModel("appModel");
+            var aSelected = oModel.getProperty("/selected");
+
+            aSelected.push({ name: sValue });
+            oModel.setProperty("/selected", aSelected);
+
+            this.byId("myInput").setValue("");
         }
-
-
-
     });
 });

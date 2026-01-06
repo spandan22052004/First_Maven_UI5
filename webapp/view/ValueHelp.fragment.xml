@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <SelectDialog
+        title="Select Value"
+        items="{appModel>/items}"
+        confirm="onValueSelected">
+
+        <StandardListItem title="{appModel>name}" />
+
+    </SelectDialog>
+
+</core:FragmentDefinition>
