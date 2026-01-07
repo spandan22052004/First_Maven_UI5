@@ -1,111 +1,266 @@
 <mvc:View
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    controllerName="sample.project1.controller.View1">
+    xmlns="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:m="sap.m"
+    xmlns:goals="sample.project1.SharedBlocks.goals"
+    xmlns:personal="sample.project1.SharedBlocks.personal"
+    controllerName="sample.project1.controller.View1"
+    height="100%"
+>
+    <ObjectPageLayout
+        id="ObjectPageLayout"
+        enableLazyLoading="true"
+        beforeNavigate="onBeforeNavigate"
+        useIconTabBar="true"
+        showTitleInHeaderContent="true"
+        upperCaseAnchorBar="false"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title
+                        text="Denise Smith"
+                        wrapping="true"
+                    />
+                </expandedHeading>
 
-    <Page
-        title="Application Dashboard"
-        titleAlignment="Center">
+                <snappedHeading>
+                    <m:FlexBox
+                        fitContainer="true"
+                        alignItems="Center"
+                    >
+                        <m:Avatar
+                            src="./test-resources/sap/uxap/images/imageID_275314.png"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Title
+                            text="Denise Smith"
+                            wrapping="true"
+                        />
+                    </m:FlexBox>
+                </snappedHeading>
 
-        <content>
+                <expandedContent>
+                    <m:Text text="Senior UI Developer" />
+                </expandedContent>
 
-            <VBox
-                class="sapUiLargeMargin sapUiContentPadding"
-                alignItems="Center"
-                width="100%">
+                <snappedContent>
+                    <m:Text text="Senior UI Developer" />
+                </snappedContent>
 
-                <!-- ================= Accnt info (formatter) ================= -->
-                <Panel
-                    width="480px"
-                    headerText="Account Information"
-                    class="sapUiMediumMarginBottom">
+                <snappedTitleOnMobile>
+                    <m:Title text="Senior UI Developer" />
+                </snappedTitleOnMobile>
 
-                    <VBox class="sapUiMediumMargin">
+                <actions>
+                    <m:Button
+                        text="Edit"
+                        type="Emphasized"
+                        press="onEdit"
+                    />
+                    <m:Button
+                        type="Transparent"
+                        text="Delete"
+                    />
+                    <m:Button
+                        type="Transparent"
+                        text="Copy"
+                    />
+                    <m:OverflowToolbarButton
+                        icon="sap-icon://action"
+                        type="Transparent"
+                        text="Share"
+                        tooltip="action"
+                    />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
 
-                        <ObjectHeader
-                            title="Account Status"
-                            intro="Live Application Data"
-                            icon="sap-icon://business-card"/>
+        <headerContent>
+            <m:FlexBox
+                wrap="Wrap"
+                fitContainer="true"
+            >
+                <m:Avatar
+                    class="sapUiSmallMarginEnd"
+                    src="./test-resources/sap/uxap/images/imageID_275314.png"
+                    displaySize="L"
+                />
 
-                        <HBox
-                            justifyContent="SpaceBetween"
-                            alignItems="Center"
-                            class="sapUiSmallMarginTop">
-                            <Label text="Status" design="Bold"/>
-                            <ObjectStatus
-                                text="{ path: 'appModel>/status', formatter: '.formatter.statusText' }"
-                                state="{ path: 'appModel>/status', formatter: '.formatter.statusState' }"/>
-                        </HBox>
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Link text="+33 6 4512 5158" />
+                    <m:Link text="DeniseSmith@sap.com" />
+                </layout:VerticalLayout>
 
-                        <HBox
-                            justifyContent="SpaceBetween"
-                            alignItems="Center"
-                            class="sapUiSmallMarginTop">
-                            <Label text="Amount" design="Bold"/>
-                            <Text
-                                text="{ path: 'appModel>/amount', formatter: '.formatter.amountFormat' }"/>
-                        </HBox>
 
-                        <Button
-                            text="Show Status"
-                            icon="sap-icon://message-popup"
-                            type="Emphasized"
-                            press="onShowStatus"
-                            class="sapUiMediumMarginTop"
-                            width="100%"/>
-                    </VBox>
-                </Panel>
+                <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Image
+                        src="./test-resources/sap/uxap/images/linkedin.png"
+                    />
+                    <m:Image
+                        src="./test-resources/sap/uxap/images/Twitter.png"
+                        class="sapUiSmallMarginBegin"
+                    />
+                </layout:HorizontalLayout>
 
-                <!-- ================= Input using valuehelp ================= -->
-                <Panel
-                    width="480px"
-                    headerText="Select &amp; Add Values">
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Label text="Hello! I am Denise and I use UxAP" />
+                    <m:VBox>
+                        <m:Label text="Achieved goals" />
+                        <m:ProgressIndicator
+                            percentValue="30"
+                            displayValue="30%"
+                        />
+                    </m:VBox>
+                </layout:VerticalLayout>
 
-                    <VBox class="sapUiMediumMargin">
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Label text="San Jose, USA" />
+                </layout:VerticalLayout>
+            </m:FlexBox>
+        </headerContent>
 
-                        <Label
-                            text="Select Value"
-                            design="Bold"
-                            class="sapUiSmallMarginBottom"/>
+        <sections>
+            <ObjectPageSection
+                titleUppercase="false"
+                id="goals"
+                title="2014 Goals Plan"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="goalsSS1"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <goals:GoalsBlock id="goalsblock" />
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
 
-                        <Input
-                            id="myInput"
-                            placeholder="Click value help"
-                            showValueHelp="true"
-                            valueHelpRequest="onValueHelp"/>
+            <ObjectPageSection
+                titleUppercase="false"
+                id="personal"
+                title="Personal"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="personalSS1"
+                        title="Connect"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <personal:BlockPhoneNumber id="phone" />
+                            <!-- <personal:BlockSocial id="social"/>
+							<personal:BlockAdresses id="adresses"/>
+							<personal:BlockMailing id="mailing" columnLayout="1"/> -->
+                        </blocks>
+                    </ObjectPageSubSection>
 
-                        <Button
-                            text="Add to Table"
-                            icon="sap-icon://add"
-                            type="Emphasized"
-                            press="onAdd"
-                            class="sapUiSmallMarginTop"/>
+                    <ObjectPageSubSection
+                        id="personalSS2"
+                        title="Payment information"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <personal:PersonalBlockPart1
+                                id="part1"
+                                columnLayout="3"
+                            />
+                        </blocks>
+                        <moreBlocks>
+                            <personal:PersonalBlockPart2
+                                id="part2"
+                                columnLayout="3"
+                            />
+                        </moreBlocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
 
-                        <Table
-                            items="{appModel>/selected}"
-                            class="sapUiMediumMarginTop"
-                            inset="false">
+            <!-- <ObjectPageSection
+                id="connections"
+                title="Connections"
+                titleUppercase="false"
+            >
+                <subSections>
+                    <ObjectPageSubSection title="Connections">
+                        <blocks>
+                            <connections:ConnectionsBlock
+                                id="connectionsBlock"
+                            />
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection> -->
 
-                            <columns>
-                                <Column>
-                                    <Text text="Selected Values"/>
-                                </Column>
-                            </columns>
+            <!-- <ObjectPageSection titleUppercase="false" id="employment" title="Employment">
+				<subSections>
+					<ObjectPageSubSection id="employmentSS1" title="Job information" titleUppercase="false">
+						<blocks>
+							<employment:BlockJobInfoPart1 id="jobinfopart1"/>
+							<employment:BlockJobInfoPart2 id="jobinfopart2"/>
+							<employment:BlockJobInfoPart3 id="jobinfopart3"/>
+						</blocks>
+					</ObjectPageSubSection>
 
-                            <items>
-                                <ColumnListItem>
-                                    <cells>
-                                        <Text text="{appModel>name}"/>
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
+					<ObjectPageSubSection id="employmentSS2" title="Employee Details" titleUppercase="false">
+						<blocks>
+							<employment:BlockEmpDetailPart1 id="empdetailpart1" columnLayout="1"/>
+						</blocks>
+						<moreBlocks>
+							<employment:BlockEmpDetailPart2 id="empdetailpart2" columnLayout="1"/>
+							<employment:BlockEmpDetailPart3 id="empdetailpart3" columnLayout="1"/>
+						</moreBlocks>
+					</ObjectPageSubSection>
 
-                        </Table>
-                    </VBox>
-                </Panel>
-
-            </VBox>
-
-        </content>
-    </Page>
+					<ObjectPageSubSection id="employmentSS3" title="Job Relationship" titleUppercase="false">
+						<blocks>
+							<employment:EmploymentBlockJob id="employmentblockjob" showSubSectionMore="true">
+								<employment:mappings>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp1"
+												  externalPath="/Employee/0"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp2"
+												  externalPath="/Employee/1"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp3"
+												  externalPath="/Employee/2"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp4"
+												  externalPath="/Employee/3"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp5"
+												  externalPath="/Employee/4"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp6"
+												  externalPath="/Employee/5"/>
+								</employment:mappings>
+							</employment:EmploymentBlockJob>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection titleUppercase="false" id="connections" title="Connections">
+				<subSections>
+					<ObjectPageSubSection id="connectionsSS1" titleUppercase="false" title="Connections">
+						<blocks>
+							<connections:ConnectionsBlock id="connectionsblock">
+								<connections:mappings>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp1"
+												  externalPath="/Employee/0"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp2"
+												  externalPath="/Employee/1"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp3"
+												  externalPath="/Employee/2"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp4"
+												  externalPath="/Employee/3"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp5"
+												  externalPath="/Employee/4"/>
+									<ModelMapping externalModelName="ObjectPageModel" internalModelName="emp6"
+												  externalPath="/Employee/5"/>
+								</connections:mappings>
+							</connections:ConnectionsBlock>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection> -->
+        </sections>
+    </ObjectPageLayout>
 </mvc:View>

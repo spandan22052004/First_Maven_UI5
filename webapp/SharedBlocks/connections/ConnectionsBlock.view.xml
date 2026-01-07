@@ -1,0 +1,41 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="sample.project1.SharedBlocks.connections.ConnectionsBlock">
+
+    <SplitContainer
+        id="connectionsSplit">
+
+        <masterPages>
+            <Page title="Employees">
+                <List
+                    mode="SingleSelectMaster"
+                    items="{ObjectPageModel>/Employee}"
+                    selectionChange="onEmployeeSelect">
+
+                    <StandardListItem
+                        title="{ObjectPageModel>name}"
+                        type="Active"/>
+                </List>
+            </Page>
+        </masterPages>
+
+        <detailPages>
+            <Page title="Employee Details">
+                <VBox class="sapUiSmallMargin">
+                    <Image
+                        width="100px"
+                        src="{selectedEmployee>/picture}"/>
+
+                    <Title
+                        text="{selectedEmployee>/name}"
+                        level="H2"/>
+
+                    <Text
+                        text="{selectedEmployee>/job}"/>
+                </VBox>
+            </Page>
+        </detailPages>
+
+    </SplitContainer>
+</mvc:View>
