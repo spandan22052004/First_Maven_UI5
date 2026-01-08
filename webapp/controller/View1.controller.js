@@ -1,67 +1,62 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/m/Button",
-	"sap/m/Dialog",
 	"sap/m/MessageToast",
-	"sap/m/Text"
-], function (Controller, Button, Dialog, MessageToast, Text) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/Device",
+	"sap/base/Log"
+], function (MessageToast, Controller, Device, Log) {
 	"use strict";
+
 	return Controller.extend("sample.project1.controller.View1", {
+
 		onInit: function () {
-			this.bEditMode = false;
-			this.oOPL = this.getView().byId("ObjectPageLayout");
-			this.oSelectedSection = null;
-			this.oPreviousSelectedSection = null;
+			this.getSplitAppObj().setHomeIcon({
+				'phone': 'phone-icon.png',
+				'tablet': 'tablet-icon.png',
+				'icon': 'desktop.ico'
+			});
+
+			Device.orientation.attachHandler(this.onOrientationChange, this);
 		},
-		onEdit: function () {
-			this.bEditMode = !this.bEditMode;
-			var sEditMode =  this.bEditMode ? "enabled" : "disabled";
-			MessageToast.show("Edit mode " + sEditMode);
+
+		onExit: function () {
+			Device.orientation.detachHandler(this.onOrientationChange, this);
 		},
-		onBeforeNavigate: function (oEvent) {
-			if (!this.bEditMode) {
-				return;
+
+		onOrientationChange: function (mParams) {
+			var sMsg = "Orientation now is: " + (mParams.landscape ? "Landscape" : "Portrait");
+			MessageToast.show(sMsg, { duration: 5000 });
+		},
+
+
+		onPressDetailBack: function () {
+			this.getSplitAppObj().backDetail();
+		},
+
+		onPressMasterBack: function () {
+			this.getSplitAppObj().backMaster();
+		},
+
+		onPressGoToMaster: function () {
+			this.getSplitAppObj().toMaster(this.createId("master2"));
+		},
+
+		onDepartmentPress: function (oEvent) {
+			var sDeptId = oEvent.getParameter("listItem")
+				.getCustomData()[0]
+				.getValue();
+
+			var sDetailPageId = "detail" + sDeptId;
+
+			this.getSplitAppObj().toDetail(this.createId(sDetailPageId));
+		},
+		
+		getSplitAppObj: function () {
+			var result = this.byId("SplitAppDemo");
+			if (!result) {
+				Log.info("SplitApp object can't be found");
 			}
-
-			var oSection = oEvent.getParameter("section");
-
-			oEvent.preventDefault();
-
-			if (!this.oDialog) {
-				this.oDialog = new Dialog({
-					title: "Unsaved changes",
-					content: new Text({
-						text: "You are in 'Edit' mode. Are you sure you want to navigate to other section?"
-					}),
-					beginButton: new Button({
-						text: "OK",
-						press: function () {
-							this.oDialog.close();
-							this.oPreviousSelectedSection = this.oSelectedSection;
-							this.oOPL.setSelectedSection(this.oSelectedSection);
-						}.bind(this)
-					}),
-					endButton: new Button({
-						text: "Cancel",
-						press: function () {
-							this.oDialog.close();
-							this.oSelectedSection = this.oPreviousSelectedSection;
-						}.bind(this)
-					})
-				});
-
-				this.getView().addDependent(this.oDialog);
-				this.oDialog.attachAfterClose(function () {
-					this.oSelectedSection.getDomRef().focus();
-				}.bind(this));
-			}
-
-			if (this.oSelectedSection !== oSection) {
-				this.oDialog.open();
-				this.oPreviousSelectedSection = this.oSelectedSection;
-			}
-
-			this.oSelectedSection = oSection;
+			return result;
 		}
+
 	});
 });

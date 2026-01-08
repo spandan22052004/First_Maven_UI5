@@ -53,9 +53,9 @@
           "bundleName": "sample.project1.i18n.i18n"
         }
       },
-       "ObjectPageModel": {
+       "deptModel": {
         "type": "sap.ui.model.json.JSONModel",
-        "uri": "model/HRData.json"
+        "uri": "model/data.json"
       }
     },
     "resources": {

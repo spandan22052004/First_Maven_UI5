@@ -1,10 +1,83 @@
 {
-  "status": "E",
-  "amount": 2500.755643,
-  "items" :[
-     { "name": "Apple" },
-    { "name": "Banana" },
-    { "name": "Orange" }
-  ],
-  "selected":[]
+  "company": {
+    "name": "Maventic Innovative Solutions",
+    "location": "India",
+    "established": "2006"
+  },
+  "departments": [
+    {
+      "deptId": "HR",
+      "deptName": "Human Resources",
+      "overview": {
+        "headOfDept": "Ananya Sharma",
+        "headCount": 120,
+        "workingHours": "9 AM – 6 PM",
+        "avgSalary": "₹8.5 LPA",
+        "contactNumber": "+91-9876543210"
+      },
+      "responsibilities": {
+        "title": "Core Responsibilities",
+        "items": [
+          "Recruitment and onboarding",
+          "Payroll management",
+          "Employee engagement",
+          "Policy enforcement"
+        ]
+      },
+      "systems": {
+        "title": "Tools & Systems",
+        "items": [
+          "SAP SuccessFactors",
+          "SAP HCM",
+          "Employee Central",
+          "Internal HR portals"
+        ]
+      },
+      "kpis": {
+        "title": "Key Metrics",
+        "items": [
+          "Attrition rate",
+          "Employee satisfaction score",
+          "Average hiring time"
+        ]
+      }
+    },
+    {
+      "deptId": "FIN",
+      "deptName": "Finance",
+      "overview": {
+        "headOfDept": "Rohit Mehta",
+        "headCount": 80,
+        "workingHours": "9:30 AM – 6:30 PM",
+        "avgSalary": "₹10.2 LPA",
+        "contactNumber": "+91-9123456780"
+      },
+      "responsibilities": {
+        "title": "Financial Responsibilities",
+        "items": [
+          "Budget planning",
+          "Accounting",
+          "Financial reporting",
+          "Audits and compliance"
+        ]
+      },
+      "systems": {
+        "title": "Finance Applications",
+        "items": [
+          "SAP S/4HANA Finance",
+          "SAP FICO",
+          "Concur",
+          "Financial analytics dashboards"
+        ]
+      },
+      "kpis": {
+        "title": "Performance Indicators",
+        "items": [
+          "Operating margin",
+          "Cost optimization ratio",
+          "Audit closure rate"
+        ]
+      }
+    }
+  ]
 }
