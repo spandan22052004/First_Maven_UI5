@@ -2,276 +2,60 @@
     controllerName="sample.project1.controller.View1"
     xmlns="sap.m"
     xmlns:uxap="sap.uxap"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
->
-    <SplitApp
-        id="SplitAppDemo"
-        initialMaster="master"
-        initialDetail="detailEmpty"
-    >
-        <detailPages>
-            <Page id="detailEmpty">
-                <VBox
-                    class="sapUiMediumMargin"
-                    alignItems="Center"
-                    justifyContent="Center"
-                >
-                    <Text text="Select a department to view details" />
-                </VBox>
-            </Page>
-            <Page
-                id="detailHR"
-                showNavButton="true"
-                navButtonPress=".onPressDetailBack"
-            >
-                <uxap:ObjectPageLayout
-                    showTitleInHeaderContent="true"
-                    useIconTabBar="true"
-                    enableLazyLoading="true"
-                    binding="{deptModel>/departments/0}"
-                >
-                    <uxap:headerTitle>
-                        <uxap:ObjectPageDynamicHeaderTitle>
-                            <uxap:heading>
-                                <Title text="{deptModel>deptName}" />
-                            </uxap:heading>
-                        </uxap:ObjectPageDynamicHeaderTitle>
-                    </uxap:headerTitle>
+    xmlns:mvc="sap.ui.core.mvc">
 
-                    <uxap:headerContent>
-                        <HBox
-                            wrap="Wrap"
-                            justifyContent="SpaceBetween"
-                        >
-                            <VBox>
-                                <ObjectStatus
-                                    title="Head of Department"
-                                    text="{deptModel>overview/headOfDept}"
-                                />
-                                <ObjectStatus
-                                    title="Head Count"
-                                    text="{deptModel>overview/headCount}"
-                                />
-                            </VBox>
-                            <VBox>
-                                <ObjectStatus
-                                    title="Working Hours"
-                                    text="{deptModel>overview/workingHours}"
-                                />
-                                <ObjectStatus
-                                    title="Avg Salary"
-                                    text="{deptModel>overview/avgSalary}"
-                                />
-                            </VBox>
-                            <VBox>
-                                <ObjectStatus
-                                    title="Contact"
-                                    text="{deptModel>overview/contactNumber}"
-                                />
-                            </VBox>
-                        </HBox>
-                    </uxap:headerContent>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        class="sapUiContentPadding">
 
-                    <uxap:sections>
-                        <uxap:ObjectPageSection
-                            title="{deptModel>responsibilities/title}"
-                        >
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <List
-                                        items="{deptModel>responsibilities/items}"
-                                    >
-                                        <StandardListItem
-                                            title="{deptModel>}"
-                                        />
-                                    </List>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
+        <!-- Input Section -->
+        <VBox class="formContainer">
 
-                        <uxap:ObjectPageSection
-                            title="{deptModel>systems/title}"
-                        >
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <HBox
-                                        wrap="Wrap"
-                                        items="{deptModel>systems/items}"
-                                    >
-                                        <ObjectStatus
-                                            text="{deptModel>}"
-                                            state="Information"
-                                            class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-                                        />
-                                    </HBox>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
+            <Input
+                placeholder="Name"
+                width="100%" 
+                value="{userModel>/ProductName}"/>
 
-                        <uxap:ObjectPageSection title="{deptModel>kpis/title}">
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <List items="{deptModel>kpis/items}">
-                                        <ObjectListItem title="{deptModel>}" />
-                                    </List>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
-                    </uxap:sections>
-                </uxap:ObjectPageLayout>
-            </Page>
+            <Input
+                placeholder="Description"
+                width="100%" 
+                value="{userModel>/ProductDescription}"/>
 
-            <Page
-                id="detailFIN"
-                showNavButton="true"
-                navButtonPress=".onPressDetailBack"
-            >
-                <uxap:ObjectPageLayout
-                    useIconTabBar="true"
-                    enableLazyLoading="true"
-                    binding="{deptModel>/departments/1}"
-                >
-                    <uxap:headerTitle>
-                        <uxap:ObjectPageDynamicHeaderTitle>
-                            <uxap:heading>
-                                <Title text="{deptModel>deptName}" />
-                            </uxap:heading>
-                        </uxap:ObjectPageDynamicHeaderTitle>
-                    </uxap:headerTitle>
+            <!-- Button Section -->
+            <HBox
+                class="buttonContainer"
+                justifyContent="SpaceBetween">
 
-                    <uxap:headerContent>
-                        <HBox
-                            wrap="Wrap"
-                            justifyContent="SpaceBetween"
-                        >
-                            <VBox>
-                                <ObjectStatus
-                                    title="Head of Department"
-                                    text="{deptModel>overview/headOfDept}"
-                                />
-                                <ObjectStatus
-                                    title="Head Count"
-                                    text="{deptModel>overview/headCount}"
-                                />
-                            </VBox>
-                            <VBox>
-                                <ObjectStatus
-                                    title="Working Hours"
-                                    text="{deptModel>overview/workingHours}"
-                                />
-                                <ObjectStatus
-                                    title="Avg Salary"
-                                    text="{deptModel>overview/avgSalary}"
-                                />
-                            </VBox>
-                            <VBox>
-                                <ObjectStatus
-                                    title="Contact"
-                                    text="{deptModel>overview/contactNumber}"
-                                />
-                            </VBox>
-                        </HBox>
-                    </uxap:headerContent>
+                <Button
+                    text="Create"
+                    type="Emphasized"
+                    class="actionButton"
+                    press="onCreate" />
 
-                    <uxap:sections>
-                        <uxap:ObjectPageSection
-                            title="{deptModel>responsibilities/title}"
-                        >
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <List
-                                        items="{deptModel>responsibilities/items}"
-                                    >
-                                        <StandardListItem
-                                            title="{deptModel>}"
-                                        />
-                                    </List>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
+                <Button
+                    text="Update"
+                    class="actionButton"
+                    press="onUpdate" />
 
-                        <uxap:ObjectPageSection
-                            title="{deptModel>systems/title}"
-                        >
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <HBox
-                                        wrap="Wrap"
-                                        items="{deptModel>systems/items}"
-                                    >
-                                        <ObjectStatus
-                                            text="{deptModel>}"
-                                            state="Information"
-                                            class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-                                        />
-                                    </HBox>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
+                <Button
+                    text="Delete"
+                    class="actionButton"
+                    press="onDelete" />
 
-                        <uxap:ObjectPageSection title="{deptModel>kpis/title}">
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <List items="{deptModel>kpis/items}">
-                                        <ObjectListItem title="{deptModel>}" />
-                                    </List>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
-                    </uxap:sections>
-                </uxap:ObjectPageLayout>
-            </Page>
-        </detailPages>
+            </HBox>
+        </VBox>
 
-        <masterPages>
-            <Page
-                id="master"
-                title="Maventic Innovative Solutions"
-                backgroundDesign="List"
-            >
-                <VBox class="sapUiMediumMargin">
-                    <Title
-                        text="Maventic Innovative Solutions"
-                        level="H2"
-                    />
-                    <Text
-                        text="Welcome to Maventic Innovative Solutions. Navigate to view departments."
-                        wrapping="true"
-                        class="sapUiSmallMarginBottom"
-                    />
-                </VBox>
+        <List
+            headerText="Products"
+            items="{/Products}">
 
-                <List>
-                    <StandardListItem
-                        title="View Departments"
-                        description="Navigate to department list"
-                        type="Navigation"
-                        press=".onPressGoToMaster"
-                    />
-                </List>
-            </Page>
+            <StandardListItem
+                title="{Name}"
+                description="{Description}"
+                type="Active"
+                press="onSelection" />
+        </List>
 
-            <Page
-                id="master2"
-                title="Departments"
-                backgroundDesign="List"
-                showNavButton="true"
-                navButtonPress=".onPressMasterBack"
-            >
-                <List
-                    headerText="Departments at Maventic"
-                    items="{deptModel>/departments}"
-                    itemPress=".onDepartmentPress"
-                >
-                    <StandardListItem
-                        title="{deptModel>deptName}"
-                        description="Click to view department details"
-                        type="Active"
-                        custom:deptId="{deptModel>deptId}"
-                    />
-                </List>
-            </Page>
-        </masterPages>
-    </SplitApp>
+    </Page>
 </mvc:View>
