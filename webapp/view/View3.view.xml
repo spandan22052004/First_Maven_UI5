@@ -1,13 +1,13 @@
 <mvc:View
-    controllerName="sample.project1.controller.View1"
+    controllerName="sample.project1.controller.View3"
     xmlns="sap.m"
     xmlns:uxap="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
 >
     <Page
-        id="page"
-        title="Product Page"
+        id="page3"
+        title="Suppliers Page"
         showNavButton="true"
         navButtonPress="onNavBack"
         class="sapUiContentPadding"
@@ -19,21 +19,41 @@
             />
         </headerContent>
 
-        <!-- input -->
+        <!-- Input Section -->
         <VBox class="formContainer">
             <Input
                 placeholder="Name"
                 width="100%"
-                value="{userModel>/ProductName}"
+                value="{userModel>/SupplierName}"
             />
 
             <Input
-                placeholder="Description"
+                placeholder="Street"
                 width="100%"
-                value="{userModel>/ProductDescription}"
+                value="{userModel>/SupplierStreet}"
+            />
+            <Input
+                placeholder="City"
+                width="100%"
+                value="{userModel>/SupplierCity}"
+            />
+            <Input
+                placeholder="State"
+                width="100%"
+                value="{userModel>/SupplierState}"
+            />
+            <Input
+                placeholder="ZipCode"
+                width="100%"
+                value="{userModel>/SupplierZipCode}"
+            />
+            <Input
+                placeholder="Country"
+                width="100%"
+                value="{userModel>/SupplierCountry}"
             />
 
-            <!-- btn -->
+            <!-- Button Section -->
             <HBox
                 class="buttonContainer"
                 justifyContent="SpaceBetween"
@@ -42,33 +62,30 @@
                     text="Create"
                     type="Emphasized"
                     class="actionButton"
-                    enabled="{= ${userModel>/ProductName} !== '' }"
                     press="onCreate"
                 />
 
                 <Button
                     text="Update"
                     class="actionButton"
-                    enabled="{userModel>/Visibility}"
                     press="onUpdate"
                 />
 
                 <Button
                     text="Delete"
                     class="actionButton"
-                    enabled="{= ${userModel>/ProductName} !== '' &amp;&amp; ${userModel>/ProductDescription} !== '' }"
                     press="onDelete"
                 />
             </HBox>
         </VBox>
 
         <List
-            headerText="Products"
-            items="{/Products}"
+            headerText="Suppliers"
+            items="{/Suppliers}"
         >
             <StandardListItem
                 title="{Name}"
-                description="{Description}"
+                description="{Address/Street}|{Address/City}|{Address/State}|{Address/ZipCode}|{Address/Country}"
                 type="Active"
                 press="onSelection"
             />

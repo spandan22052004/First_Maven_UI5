@@ -1,0 +1,11 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Toolbar>
+        <Button text="Products" press="onNavProducts"/>
+        <Button text="Categories" press="onNavCategories"/>
+        <Button text="Suppliers" press="onNavSuppliers"/>
+    </Toolbar>
+
+</core:FragmentDefinition>

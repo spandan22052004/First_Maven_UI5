@@ -1,5 +1,15 @@
 {  
-   "ProductID":"",
-   "ProductName": "",
-  "ProductDescription": ""
+  "Visibility":false,
+  "ProductID":"",
+  "ProductName": "",
+  "ProductDescription": "",
+  "CategoriesID":"",
+  "CategoriesName":"",
+  "SupplierID":"",
+  "SupplierName":"",
+  "SupplierStreet":"",
+  "SupplierCity":"",
+  "SupplierState":"",
+  "SupplierZipCode":"",
+  "SupplierCountry":""
 }

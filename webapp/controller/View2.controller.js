@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (BaseController,MessageToast) {
 	"use strict";
 
-	return BaseController.extend("sample.project1.controller.View1", {
+	return BaseController.extend("sample.project1.controller.View2", {
 
 		onInit: function () {
 
@@ -12,26 +12,20 @@ sap.ui.define([
 		onCreate: function () {
 			var oModel = this.getView().getModel();
 			var uModel = this.getView().getModel("userModel");
-			var productName = uModel.getProperty("/ProductName");
-			var productDescription = uModel.getProperty("/ProductDescription");
+			var categoryName = uModel.getProperty("/CategoriesName");
 			oModel.setUseBatch(false);
 			let oPayload = {
 				ID: Math.floor(Math.random() * 100000), 
-				Name: productName,
-				Description: productDescription,
-				ReleaseDate: new Date(),
-				Rating: 1,
-				Price: "100.0"
+				Name: categoryName,
 			}
-			oModel.create("/Products", oPayload, {
+			oModel.create("/Categories", oPayload, {
 				success: function () {
-					MessageToast.show("Product created successfully");
-					uModel.setProperty("/ProductName", "");
-					uModel.setProperty("/ProductDescription", "");
+					MessageToast.show("Catgeory created successfully");
+					uModel.setProperty("/CategoriesName", "");
 					oModel.refresh(true);
 				},
 				error: function (oError) {
-					MessageToast.show("Failed to create product");
+					MessageToast.show("Failed to create Catgeory");
 					console.error(oError);
 				}
 			})
@@ -39,30 +33,26 @@ sap.ui.define([
 		onUpdate: function () {
 
 			if (!this._oSelectedContext) {
-				MessageToast.show("Please select a product first");
+				MessageToast.show("Please select a Catgeory first");
 				return;
 			}
 
 			var oModel = this.getView().getModel();
 			var oUserModel = this.getView().getModel("userModel");
 
-			var sName = oUserModel.getProperty("/ProductName");
-			var sDescription = oUserModel.getProperty("/ProductDescription");
+			var sName = oUserModel.getProperty("/CategoriesName");
 
 			var oPayload = {
 				Name: sName,
-				Description: sDescription
 			};
 
 			oModel.setUseBatch(false);
 
 			oModel.update(this._oSelectedContext.getPath(), oPayload, {
 				success: function () {
-					sap.m.MessageToast.show("Product updated successfully");
-					oUserModel.setProperty("/ProductID", "");
-					oUserModel.setProperty("/ProductName", "");
-					oUserModel.setProperty("/ProductDescription", "");
-					oUserModel.setProperty("/Visibility",false);
+					sap.m.MessageToast.show("Catgeory updated successfully");
+					oUserModel.setProperty("/CategoriesID", "");
+					oUserModel.setProperty("/CategoriesName", "");
 
 					this._oSelectedContext = null;
 
@@ -77,7 +67,7 @@ sap.ui.define([
 		},
 		onDelete: function () {
 			if (!this._oSelectedContext) {
-				sap.m.MessageToast.show("Please select a product to delete");
+				MessageToast.show("Please select a category to delete");
 				return;
 			}
 
@@ -88,11 +78,11 @@ sap.ui.define([
 
 			oModel.remove(this._oSelectedContext.getPath(), {
 				success: function () {
-					sap.m.MessageToast.show("Product deleted successfully");
+					sap.m.MessageToast.show("category deleted successfully");
 
-					oUserModel.setProperty("/ProductID", "");
-					oUserModel.setProperty("/ProductName", "");
-					oUserModel.setProperty("/ProductDescription", "");
+					oUserModel.setProperty("/CategoriesID", "");
+					oUserModel.setProperty("/CategoriesName", "");
+
 
 					this._oSelectedContext = null;
 
@@ -119,11 +109,9 @@ sap.ui.define([
 			var oData = oContext.getObject();
 			var oUserModel = this.getView().getModel("userModel");
 
-			oUserModel.setProperty("/ProductID", oData.ID);
-			oUserModel.setProperty("/ProductName", oData.Name);
-			oUserModel.setProperty("/ProductDescription", oData.Description);
-			oUserModel.setProperty("/Visibility",true);
-		},
+			oUserModel.setProperty("/CategoriesID", oData.ID);
+			oUserModel.setProperty("/CategoriesName", oData.Name);
+		}
 
 
 	});
