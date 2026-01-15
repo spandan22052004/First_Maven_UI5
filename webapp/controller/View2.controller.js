@@ -1,118 +1,92 @@
 sap.ui.define([
-	"sample/project1/controller/BaseController",
-	"sap/m/MessageToast",
-], function (BaseController,MessageToast) {
-	"use strict";
+  "sample/project1/controller/BaseController",
+  "sap/m/MessageToast",
+  "sap/ui/core/Fragment"
+], function (BaseController, MessageToast, Fragment) {
+  "use strict";
 
-	return BaseController.extend("sample.project1.controller.View2", {
+  return BaseController.extend("sample.project1.controller.View2", {
 
-		onInit: function () {
+    onInit: function () {
+      this.getRouter()
+        .getRoute("RouteView2")
+        .attachPatternMatched(this._onMatched, this);
+    },
 
-		},
-		onCreate: function () {
-			var oModel = this.getView().getModel();
-			var uModel = this.getView().getModel("userModel");
-			var categoryName = uModel.getProperty("/CategoriesName");
-			oModel.setUseBatch(false);
-			let oPayload = {
-				ID: Math.floor(Math.random() * 100000), 
-				Name: categoryName,
-			}
-			oModel.create("/Categories", oPayload, {
-				success: function () {
-					MessageToast.show("Catgeory created successfully");
-					uModel.setProperty("/CategoriesName", "");
-					oModel.refresh(true);
-				},
-				error: function (oError) {
-					MessageToast.show("Failed to create Catgeory");
-					console.error(oError);
-				}
-			})
-		},
-		onUpdate: function () {
+    _onMatched: function (oEvent) {
+      var sEmpId = oEvent.getParameter("arguments").empId;
+      var oModel = this.getView().getModel("employeeModel");
 
-			if (!this._oSelectedContext) {
-				MessageToast.show("Please select a Catgeory first");
-				return;
-			}
+      var oEmp = oModel.getProperty("/Employees")
+        .find(e => e.EmpID === sEmpId);
 
-			var oModel = this.getView().getModel();
-			var oUserModel = this.getView().getModel("userModel");
+      oModel.setProperty("/selectedEmployee", oEmp);
+      oModel.setProperty("/editMode", false);
 
-			var sName = oUserModel.getProperty("/CategoriesName");
+      this.getView().bindElement("employeeModel>/selectedEmployee");
+    },
 
-			var oPayload = {
-				Name: sName,
-			};
+    //edt mode onnnnn
 
-			oModel.setUseBatch(false);
+    onEdit: function () {
+      this.getView().getModel("employeeModel").setProperty("/editMode", true);
+    },
 
-			oModel.update(this._oSelectedContext.getPath(), oPayload, {
-				success: function () {
-					sap.m.MessageToast.show("Catgeory updated successfully");
-					oUserModel.setProperty("/CategoriesID", "");
-					oUserModel.setProperty("/CategoriesName", "");
+    onSave: function () {
+      var oModel = this.getView().getModel("employeeModel");
 
-					this._oSelectedContext = null;
+      // swtch back to read only
+      oModel.setProperty("/editMode", false);
 
-					oModel.refresh(true);
-				}.bind(this),
+      MessageToast.show("Employee details saved");
+    },
 
-				error: function (oError) {
-					sap.m.MessageToast.show("Update failed");
-					console.error(oError);
-				}
-			});
-		},
-		onDelete: function () {
-			if (!this._oSelectedContext) {
-				MessageToast.show("Please select a category to delete");
-				return;
-			}
+    //projects ..
 
-			var oModel = this.getView().getModel();
-			var oUserModel = this.getView().getModel("userModel");
+    onAddProject: function () {
+      var oModel = this.getView().getModel("employeeModel");
 
-			oModel.setUseBatch(false);
+      oModel.setProperty("/newProject", {
+        ProjectID: "",
+        Name: "",
+        StartDate: "",
+        EndDate: ""
+      });
 
-			oModel.remove(this._oSelectedContext.getPath(), {
-				success: function () {
-					sap.m.MessageToast.show("category deleted successfully");
+      if (!this._oProjectDialog) {
+        Fragment.load({
+          name: "sample.project1.fragment.AddProject",
+          controller: this
+        }).then(function (oDialog) {
+          this._oProjectDialog = oDialog;
+          this.getView().addDependent(oDialog);
+          oDialog.open();
+        }.bind(this));
+      } else {
+        this._oProjectDialog.open();
+      }
+    },
 
-					oUserModel.setProperty("/CategoriesID", "");
-					oUserModel.setProperty("/CategoriesName", "");
+    onSaveProject: function () {
+      var oModel = this.getView().getModel("employeeModel");
+      var oNewProject = oModel.getProperty("/newProject");
+      var aProjects = oModel.getProperty("/selectedEmployee/Projects");
 
+      aProjects.push(oNewProject);
+      oModel.setProperty("/selectedEmployee/Projects", aProjects);
 
-					this._oSelectedContext = null;
+      this._oProjectDialog.close();
+      MessageToast.show("Project added");
+    },
 
-					oModel.refresh(true);
-				}.bind(this),
-
-				error: function (oError) {
-					sap.m.MessageToast.show("Delete failed");
-					console.error(oError);
-				}
-			});
-		},
-		onSelection: function (oEvent) {
-			var oItem = oEvent.getSource();
-
-			var oContext = oItem.getBindingContext();
-
-			if (!oContext) {
-				return;
-			}
-
-			this._oSelectedContext = oContext;
-
-			var oData = oContext.getObject();
-			var oUserModel = this.getView().getModel("userModel");
-
-			oUserModel.setProperty("/CategoriesID", oData.ID);
-			oUserModel.setProperty("/CategoriesName", oData.Name);
-		}
+    onCancelProject: function () {
+      this._oProjectDialog.close();
+    },
 
 
-	});
+    onNavBack: function () {
+      this.onBack();
+    }
+
+  });
 });

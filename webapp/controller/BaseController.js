@@ -1,26 +1,21 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
-    "sap/ui/core/UIComponent"
-], function (Controller, History,UIComponent) {
+    "sap/ui/core/mvc/Controller"
+], function (Controller) {
     "use strict";
 
     return Controller.extend("sample.project1.controller.BaseController", {
 
-        onNavProducts: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteView1");
+        getRouter: function () {
+            return this.getOwnerComponent().getRouter();
+        },
+        navTo: function (sRouteName, oParams) {
+            this.getRouter().navTo(sRouteName, oParams || {});
         },
 
-        onNavCategories: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteView2");
-        },
 
-        onNavSuppliers: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteView3");
-        },
-
-        onNavBack: function () {
-                window.history.go(-1);
+        onBack: function () {
+            console.log("On nav back trigerred!");
+            window.history.go(-1);
         }
     });
 });

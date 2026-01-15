@@ -1,130 +1,56 @@
 sap.ui.define([
 	"sample/project1/controller/BaseController",
-	"sap/m/MessageToast",
-], function (BaseController,MessageToast) {
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function (BaseController, Filter, FilterOperator) {
 	"use strict";
 
 	return BaseController.extend("sample.project1.controller.View1", {
 
 		onInit: function () {
-
+			console.log("Router instance:", this.getRouter());
+			console.log("RouteView2:", this.getRouter().getRoute("RouteView2"));
 		},
-		onCreate: function () {
-			var oModel = this.getView().getModel();
-			var uModel = this.getView().getModel("userModel");
-			var productName = uModel.getProperty("/ProductName");
-			var productDescription = uModel.getProperty("/ProductDescription");
-			oModel.setUseBatch(false);
-			let oPayload = {
-				ID: Math.floor(Math.random() * 100000), 
-				Name: productName,
-				Description: productDescription,
-				ReleaseDate: new Date(),
-				Rating: 1,
-				Price: "100.0"
-			}
-			oModel.create("/Products", oPayload, {
-				success: function () {
-					MessageToast.show("Product created successfully");
-					uModel.setProperty("/ProductName", "");
-					uModel.setProperty("/ProductDescription", "");
-					oModel.refresh(true);
-				},
-				error: function (oError) {
-					MessageToast.show("Failed to create product");
-					console.error(oError);
-				}
-			})
-		},
-		onUpdate: function () {
 
-			if (!this._oSelectedContext) {
-				MessageToast.show("Please select a product first");
+		onSelectEmployee: function (oEvent) {
+			var oItem = oEvent.getParameter("listItem");
+			var oCtx = oItem.getBindingContext("employeeModel");
+
+			if (!oCtx) {
+				console.error("Binding context missing");
 				return;
 			}
 
-			var oModel = this.getView().getModel();
-			var oUserModel = this.getView().getModel("userModel");
+			var sEmpId = oCtx.getProperty("EmpID");
 
-			var sName = oUserModel.getProperty("/ProductName");
-			var sDescription = oUserModel.getProperty("/ProductDescription");
+			if (!sEmpId) {
+				console.error("EmpID missing in model data");
+				return;
+			}
 
-			var oPayload = {
-				Name: sName,
-				Description: sDescription
-			};
+			console.log("Navigating to EmpID:", sEmpId);
 
-			oModel.setUseBatch(false);
-
-			oModel.update(this._oSelectedContext.getPath(), oPayload, {
-				success: function () {
-					sap.m.MessageToast.show("Product updated successfully");
-					oUserModel.setProperty("/ProductID", "");
-					oUserModel.setProperty("/ProductName", "");
-					oUserModel.setProperty("/ProductDescription", "");
-					oUserModel.setProperty("/Visibility",false);
-
-					this._oSelectedContext = null;
-
-					oModel.refresh(true);
-				}.bind(this),
-
-				error: function (oError) {
-					sap.m.MessageToast.show("Update failed");
-					console.error(oError);
-				}
+			this.navTo("RouteView2", {
+				empId: sEmpId
 			});
 		},
-		onDelete: function () {
-			if (!this._oSelectedContext) {
-				sap.m.MessageToast.show("Please select a product to delete");
-				return;
-			}
 
-			var oModel = this.getView().getModel();
-			var oUserModel = this.getView().getModel("userModel");
+		onSearch: function (oEvent) {
+			var sValue = oEvent.getParameter("newValue");
+			var oBinding = this.byId("empList").getBinding("items");
 
-			oModel.setUseBatch(false);
-
-			oModel.remove(this._oSelectedContext.getPath(), {
-				success: function () {
-					sap.m.MessageToast.show("Product deleted successfully");
-
-					oUserModel.setProperty("/ProductID", "");
-					oUserModel.setProperty("/ProductName", "");
-					oUserModel.setProperty("/ProductDescription", "");
-
-					this._oSelectedContext = null;
-
-					oModel.refresh(true);
-				}.bind(this),
-
-				error: function (oError) {
-					sap.m.MessageToast.show("Delete failed");
-					console.error(oError);
-				}
-			});
-		},
-		onSelection: function (oEvent) {
-			var oItem = oEvent.getSource();
-
-			var oContext = oItem.getBindingContext();
-
-			if (!oContext) {
-				return;
-			}
-
-			this._oSelectedContext = oContext;
-
-			var oData = oContext.getObject();
-			var oUserModel = this.getView().getModel("userModel");
-
-			oUserModel.setProperty("/ProductID", oData.ID);
-			oUserModel.setProperty("/ProductName", oData.Name);
-			oUserModel.setProperty("/ProductDescription", oData.Description);
-			oUserModel.setProperty("/Visibility",true);
+			oBinding.filter(
+				sValue ? [new Filter("Name", FilterOperator.Contains, sValue)] : []
+			);
 		},
 
+		onDeptFilter: function (oEvent) {
+			var sDept = oEvent.getSource().getSelectedKey();
+			var oBinding = this.byId("empList").getBinding("items");
 
+			oBinding.filter(
+				sDept ? [new Filter("Dept", FilterOperator.EQ, sDept)] : []
+			);
+		}
 	});
 });

@@ -1,0 +1,158 @@
+{
+  "Employees": [
+    {
+      "EmpID": "E001",
+      "Name": "Rahul Chahar",
+      "Dept": "IT",
+      "Position": "Developer",
+      "Salary": 80000,
+      "Rating": 4,
+      "Phone": "9876543210",
+      "Projects": [
+        {
+          "ProjectID": "P01",
+          "Name": "UI5 Revamp",
+          "StartDate": "01/01/24",
+          "EndDate": "06/30/24"
+        },
+        {
+          "ProjectID": "P02",
+          "Name": "Fiori Migration",
+          "StartDate": "06/30/24",
+          "EndDate": "07/02/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E002",
+      "Name": "Jhulan Goswami",
+      "Dept": "HR",
+      "Position": "HR Manager",
+      "Salary": 90000,
+      "Rating": 5,
+      "Phone": "9876500000",
+      "Projects": [
+        {
+          "ProjectID": "P03",
+          "Name": "Hiring Drive",
+          "StartDate": "06/30/24",
+          "EndDate": "07/02/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E003",
+      "Name": "Sourav Ganguly",
+      "Dept": "Finance",
+      "Position": "Financial Analyst",
+      "Salary": 75000,
+      "Rating": 4,
+      "Phone": "9123456789",
+      "Projects": [
+        {
+          "ProjectID": "P04",
+          "Name": "Budget Planning 2026",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E004",
+      "Name": "Md. Shami",
+      "Dept": "IT",
+      "Position": "UI/UX Designer",
+      "Salary": 70000,
+      "Rating": 3,
+      "Phone": "9988776655",
+      "Projects": [
+        {
+          "ProjectID": "P05",
+          "Name": "Design System",
+          "StartDate": "07/02/25",
+          "EndDate": "06/30/24"
+        },
+        {
+          "ProjectID": "P01",
+          "Name": "UI5 Revamp",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E005",
+      "Name": "Akash Deep",
+      "Dept": "Sales",
+      "Position": "Sales Executive",
+      "Salary": 65000,
+      "Rating": 4,
+      "Phone": "9090909090",
+      "Projects": [
+        {
+          "ProjectID": "P06",
+          "Name": "Enterprise Client Outreach",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E006",
+      "Name": "Wriddhiman Saha",
+      "Dept": "Marketing",
+      "Position": "Marketing Manager",
+      "Salary": 85000,
+      "Rating": 5,
+      "Phone": "9812345678",
+      "Projects": [
+        {
+          "ProjectID": "P07",
+          "Name": "Brand Repositioning",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        },
+        {
+          "ProjectID": "P08",
+          "Name": "Digital Campaign Q1",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E007",
+      "Name": "Mukesh Kumar",
+      "Dept": "Operations",
+      "Position": "Operations Lead",
+      "Salary": 78000,
+      "Rating": 4,
+      "Phone": "9765432109",
+      "Projects": [
+        {
+          "ProjectID": "P09",
+          "Name": "Process Optimization",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    },
+    {
+      "EmpID": "E008",
+      "Name": "Richa Ghosh",
+      "Dept": "HR",
+      "Position": "HR Executive",
+      "Salary": 60000,
+      "Rating": 3,
+      "Phone": "9898989898",
+      "Projects": [
+        {
+          "ProjectID": "P10",
+          "Name": "Employee Engagement Program",
+          "StartDate": "07/02/25",
+          "EndDate": "08/23/25"
+        }
+      ]
+    }
+  ]
+}

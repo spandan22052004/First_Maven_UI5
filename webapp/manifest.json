@@ -68,6 +68,10 @@
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/data2.json"
       },
+      "employeeModel":{
+        "type":"sap.ui.model.json.JSONModel",
+        "uri": "model/data3.json"
+      },
       "": {
         "dataSource": "mainService",
         "preload": true,
@@ -103,16 +107,9 @@
         },
         {
           "name": "RouteView2",
-          "pattern": "View2",
+          "pattern": "Employee/{empId}",
           "target": [
             "TargetView2"
-          ]
-        },
-        {
-          "name": "RouteView3",
-          "pattern": "View3",
-          "target": [
-            "TargetView3"
           ]
         }
       ],
@@ -124,17 +121,13 @@
         "TargetView2": {
           "id": "View2",
           "name": "View2"
-        },
-        "TargetView3": {
-          "id": "View3",
-          "name": "View3"
         }
       }
     },
     "rootView": {
       "viewName": "sample.project1.view.App",
       "type": "XML",
-      "id": "App",
+      "id": "app",
       "async": true
     }
   }

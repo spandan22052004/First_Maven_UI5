@@ -1,77 +1,51 @@
 <mvc:View
     controllerName="sample.project1.controller.View1"
     xmlns="sap.m"
-    xmlns:uxap="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
 >
-    <Page
-        id="page"
-        title="Product Page"
-        showNavButton="true"
-        navButtonPress="onNavBack"
-        class="sapUiContentPadding"
-    >
-        <headerContent>
-            <core:Fragment
-                fragmentName="sample.project1.fragment.Navigation"
-                type="XML"
-            />
-        </headerContent>
-
-        <!-- input -->
-        <VBox class="formContainer">
-            <Input
-                placeholder="Name"
-                width="100%"
-                value="{userModel>/ProductName}"
+    <Page title="Employees">
+        <VBox class="sapUiMediumMargin">
+            <SearchField
+                placeholder="Search employee by name"
+                liveChange="onSearch"
             />
 
-            <Input
-                placeholder="Description"
-                width="100%"
-                value="{userModel>/ProductDescription}"
-            />
+            <Select change="onDeptFilter">
+                <core:Item
+                    key=""
+                    text="All Departments"
+                />
+                <core:Item
+                    key="IT"
+                    text="IT"
+                />
+                <core:Item
+                    key="HR"
+                    text="HR"
+                />
+                <core:Item
+                    key="Finance"
+                    text="Finance"
+                />
+                <core:Item
+                    key="Operations"
+                    text="Operations"
+                />
+            </Select>
 
-            <!-- btn -->
-            <HBox
-                class="buttonContainer"
-                justifyContent="SpaceBetween"
+            <List
+                id="empList"
+                items="{employeeModel>/Employees}"
+                mode="SingleSelectMaster"
+                itemPress="onSelectEmployee"
             >
-                <Button
-                    text="Create"
-                    type="Emphasized"
-                    class="actionButton"
-                    enabled="{= ${userModel>/ProductName} !== '' }"
-                    press="onCreate"
+                <StandardListItem
+                    title="{employeeModel>Name}"
+                    description="{employeeModel>Dept}"
+                    type="Navigation"
                 />
-
-                <Button
-                    text="Update"
-                    class="actionButton"
-                    enabled="{userModel>/Visibility}"
-                    press="onUpdate"
-                />
-
-                <Button
-                    text="Delete"
-                    class="actionButton"
-                    enabled="{= ${userModel>/ProductName} !== '' &amp;&amp; ${userModel>/ProductDescription} !== '' }"
-                    press="onDelete"
-                />
-            </HBox>
+            </List>
         </VBox>
-
-        <List
-            headerText="Products"
-            items="{/Products}"
-        >
-            <StandardListItem
-                title="{Name}"
-                description="{Description}"
-                type="Active"
-                press="onSelection"
-            />
-        </List>
     </Page>
 </mvc:View>

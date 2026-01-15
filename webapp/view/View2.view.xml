@@ -1,67 +1,95 @@
 <mvc:View
-    controllerName="sample.project1.controller.View2"
-    xmlns="sap.m"
-    xmlns:uxap="sap.uxap"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
->
-    <Page
-        id="page2"
-        title="Categories Page"
-        showNavButton="true"
-        navButtonPress="onNavBack"
-        class="sapUiContentPadding"
-    >
-        <headerContent>
-            <core:Fragment
-                fragmentName="sample.project1.fragment.Navigation"
-                type="XML"
-            />
-        </headerContent>
+  controllerName="sample.project1.controller.View2"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:form="sap.ui.layout.form">
 
-        <!-- Input Section -->
-        <VBox class="formContainer">
-            <Input
-                placeholder="Name"
-                width="100%"
-                value="{userModel>/CategoriesName}"
-            />
+<Page title="Employee Details">
 
-            <!-- Button Section -->
-            <HBox
-                class="buttonContainer"
-                justifyContent="SpaceBetween"
-            >
-                <Button
-                    text="Create"
-                    type="Emphasized"
-                    class="actionButton"
-                    press="onCreate"
-                />
+  <customHeader>
+    <Bar>
+      <contentLeft>
+        <Button icon="sap-icon://nav-back" press="onNavBack"/>
+      </contentLeft>
 
-                <Button
-                    text="Update"
-                    class="actionButton"
-                    press="onUpdate"
-                />
+      <contentMiddle>
+        <Title text="Employee Details"/>
+      </contentMiddle>
 
-                <Button
-                    text="Delete"
-                    class="actionButton"
-                    press="onDelete"
-                />
-            </HBox>
-        </VBox>
+      <contentRight>
+        <Button
+          text="Edit"
+          type="Emphasized"
+          visible="{= !${employeeModel>/editMode} }"
+          press="onEdit"/>
 
-        <List
-            headerText="Categories"
-            items="{/Categories}"
-        >
-            <StandardListItem
-                title="{Name}"
-                type="Active"
-                press="onSelection"
-            />
-        </List>
-    </Page>
+        <Button
+          text="Save"
+          type="Accept"
+          visible="{employeeModel>/editMode}"
+          press="onSave"/>
+      </contentRight>
+    </Bar>
+  </customHeader>
+
+  <form:SimpleForm
+    layout="ResponsiveGridLayout">
+
+    <Label text="Name"/>
+    <Input value="{employeeModel>Name}"
+     enabled="{employeeModel>/editMode}"/>
+
+    <Label text="Department"/>
+    <Input value="{employeeModel>Dept}"
+     enabled="{employeeModel>/editMode}"/>
+
+    <Label text="Position"/>
+    <Input value="{employeeModel>Position}"
+     enabled="{employeeModel>/editMode}"/>
+
+    <Label text="Salary"/>
+    <Input value="{employeeModel>Salary}" type="Number"
+     enabled="{employeeModel>/editMode}"/>
+
+    <Label text="Phone"/>
+    <Input value="{employeeModel>Phone}"
+     enabled="{employeeModel>/editMode}"/>
+
+  </form:SimpleForm>
+
+
+  <HBox
+    class="sapUiSmallMargin">
+
+    <Title text="Projects" level="H4" class="sapUiSmallMarginEnd"/>
+
+    <Button
+      text="Add Project"
+      icon="sap-icon://add"
+      press="onAddProject"
+      visible="{employeeModel>/editMode}"/>
+  </HBox>
+
+  <Table items="{employeeModel>Projects}">
+    <columns>
+      <Column><Text text="ID"/></Column>
+      <Column><Text text="Name"/></Column>
+      <Column><Text text="Start Date"/></Column>
+      <Column><Text text="End Date"/></Column>
+    </columns>
+
+    <items>
+      <ColumnListItem>
+        <cells>
+          <Text text="{employeeModel>ProjectID}"/>
+          <Text text="{employeeModel>Name}"/>
+          <Text text="{employeeModel>StartDate}"/>
+          <Text text="{employeeModel>EndDate}"/>
+        </cells>
+      </ColumnListItem>
+    </items>
+  </Table>
+
+</Page>
+
 </mvc:View>
